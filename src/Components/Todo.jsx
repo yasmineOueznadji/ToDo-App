@@ -28,6 +28,17 @@ const Todo = () => {
     });
   };
 
+  const toggleHandler = (id) => {
+    setTodoList((prevData) => {
+      return prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, isComplete: !item.isComplete };
+        }
+        return item;
+      });
+    });
+  };
+
   return (
     <div className="bg-white place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl">
       {/*-----------Title------------*/}
@@ -62,6 +73,7 @@ const Todo = () => {
               text={item.text}
               isComplete={item.isComplete}
               deleteHandler={deleteHandler}
+              toggleHandler={toggleHandler}
             />
           );
         })}
