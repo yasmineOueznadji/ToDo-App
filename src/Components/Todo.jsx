@@ -1,8 +1,7 @@
-import { useRef , useState} from "react";
+import { useRef, useState } from "react";
 
 import todo_icon from "../assets/todo_icon.png";
 import ListItems from "./ListItems";
-
 
 const Todo = () => {
   const inputRef = useRef();
@@ -10,8 +9,8 @@ const Todo = () => {
 
   const addHandler = () => {
     const inputTask = inputRef.current.value.trim();
-    if (!inputTask){
-        return null;
+    if (!inputTask) {
+      return null;
     }
     const taskData = {
       id: Date.now(),
@@ -21,6 +20,12 @@ const Todo = () => {
 
     setTodoList((prevData) => [...prevData, taskData]);
     inputRef.current.value = "";
+  };
+
+  const deleteHandler = (id) => {
+    setTodoList((prevData) => {
+      return prevData.filter((item) => item.id !== id);
+    });
   };
 
   return (
@@ -49,8 +54,16 @@ const Todo = () => {
 
       {/*-----------List Items------------*/}
       <div>
-        {todoList.map((item, idx) =>{
-            return <ListItems key={idx} text={item.text} />;
+        {todoList.map((item, idx) => {
+          return (
+            <ListItems
+              key={idx}
+              id={item.id}
+              text={item.text}
+              isComplete={item.isComplete}
+              deleteHandler={deleteHandler}
+            />
+          );
         })}
       </div>
     </div>
